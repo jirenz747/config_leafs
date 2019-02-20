@@ -1,0 +1,187 @@
+
+
+<button class="btn btn-primary" type="button" id="resend_data_qfx" onclick="change_rack()" >
+  Update Data from QFX
+</button>
+<button class="btn btn-success" id="commit_data_to_qfx" onclick="commit()">
+  Commit to QFX
+</button>
+
+
+{% block show_tables %}
+<div class="mycontainer">
+
+<div class="row">
+    <div class="div_table_ports col-sm-8">
+        <table class="table table-condensed table-hover interface_table" border="1">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col" class="m-0 p-0"><p class="p_table_head m-0 p-0">interface</p></th>
+            <th scope="col" class="m-0 p-0"><p class="p_table_head m-0 p-0">description</p></th>
+            <th scope="col" class="m-0 p-0"><p class="p_table_head m-0 p-0">status</p></th>
+            <th scope="col" class="m-0 p-0"><p class="p_table_head m-0 p-0">speed</p></th>
+            <th scope="col" class="m-0 p-0"><p class="p_table_head m-0 p-0">mtu</p></th>
+            <th scope="col" class="m-0 p-0"><p class="p_table_head m-0 p-0">port-mode</p></th>
+            <th scope="col" class="m-0 p-0"><p class="p_table_head m-0 p-0">vlans</p></th>
+            <th scope="col" class="m-0 p-0"><p class="p_table_head m-0 p-0">flap</p></th>
+            <th scope="col" class="m-0 p-0"><p class="p_table_head m-0 p-0">bundle</p></th>
+            <th scope="col" class="m-0 p-0"><p class="p_table_head m-0 p-0">Edit</p></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for interface in interfaces %}
+        <tr>
+            <td class="m-0 p-0">
+                <p class="m-0 p-0">{{ interface.interface }}</p>
+                <p class="port">{{ interface.interface }}_</p>
+            </td>
+            <td class="m-0 p-0">
+                <p class="m-0 p-0" id="init_description_{{ interface.interface_for_jquery }}">{{ interface.description }}</p>
+                <input type="text" id="change_description_{{ interface.interface_for_jquery }}" class="form-control form-control-sm d-none" value="{{ interface.description }}">
+            </td>
+            <td class="m-0 p-0">
+                <p class="m-0 p-0">{{ interface.status }}</p>
+            </td>
+            <td class="m-0 p-0">
+                <p class="m-0 p-0" id="init_speed_{{ interface.interface_for_jquery }}">{{ interface.speed }}</p>
+                <select id="change_speed_{{ interface.interface_for_jquery }}" class="form-control form-control-sm d-none">
+                    {% if "10Gbps" == interface.speed %}
+                        <option value="10Gbps" selected>10Gbps</option>
+                        <option value="1000mbps">1Gbps</option>
+                    {% else %}
+                        <option value="10Gbps">10Gbps</option>
+                        <option value="1000mbps" selected>1Gbps</option>
+                    {% endif %}
+                </select>
+            </td>
+            <td class="m-0 p-0">
+                <p class="m-0 p-0" id="init_mtu_{{ interface.interface_for_jquery }}">{{ interface.mtu }}</p>
+                <select id="change_mtu_{{ interface.interface_for_jquery }}" class="form-control form-control-sm d-none">
+                    {% if "9216" == interface.mtu %}
+                        <option value="9216" selected>9216</option>
+                        <option value="1514">1514</option>
+                    {% else %}
+                        <option value="9216">9216</option>
+                        <option value="1514" selected>1514</option>
+                    {% endif %}
+                </select>
+            </td>
+            <td class="m-0 p-0">
+                <p class="m-0 p-0" id="init_port_mode_{{ interface.interface_for_jquery }}">{{ interface.port_mode }}</p>
+                <select id="change_port_mode_{{ interface.interface_for_jquery }}" class="form-control form-control-sm d-none" onchange="test2(this)">
+                    {% if "trunk" == interface.port_mode %}
+                        <option value="access">access</option>
+                        <option value="trunk" selected>trunk</option>
+                    {% else %}
+                        <option value="access" selected>access</option>
+                        <option value="trunk">trunk</option>
+                    {% endif %}
+                </select>
+            </td>
+            <td class="m-0 p-0">
+                <p class="m-0 p-0" id="init_vlan_{{ interface.interface_for_jquery }}">{{ interface.vlan }}</p>
+                	<select id="change_trunk_vlan_{{ interface.interface_for_jquery }}" multiple size="2" class="form-control form-control-sm d-none">
+                    {% for vlan in vlan_table %}
+                        {% if vlan in interface.vlan %}
+                            <option value="{{ vlan }}" selected>{{ vlan }}</option>
+                        {% else %}
+                            <option value="{{ vlan }}">{{ vlan }}</option>
+                        {% endif %}
+                    {% endfor %}
+                    </select>
+                	<select id="change_access_vlan_{{ interface.interface_for_jquery }}" class="form-control form-control-sm d-none">
+                    {% for vlan in vlan_table %}
+                        {% if vlan in interface.vlan %}
+                            <option value="{{ vlan }}" selected>{{ vlan }}</option>
+                        {% else %}
+                            <option value="{{ vlan }}">{{ vlan }}</option>
+                        {% endif %}
+                    {% endfor %}
+                    </select>
+            </td>
+            <td class="m-0 p-0">
+                <p class="m-0 p-0">{{ interface.flap }}</p>
+            </td>
+            <td class="m-0 p-0">
+                <p class="m-0 p-0">{{ interface.bundle }}</p>
+            </td>
+            <td class="m-0 p-0">
+                {% if 'ae' not in interface.bundle and 'ae' not in interface.interface and 'false' not in interface.edit %}
+                <button class="btn btn-info btn-sm edit_port" value="{{ interface.interface_for_jquery }}" onclick="edit_port(this)" id="edit_port_{{ interface.interface_for_jquery }}">
+                    <span class="far fa-edit edit_port" ></span>
+                </button>
+                <button class="btn btn-info btn-sm reset_port d-none" value="{{ interface.interface_for_jquery }}" onclick="reset_port(this)" id="reset_port_{{ interface.interface_for_jquery }}">
+                    <i class="fas fa-reply"></i>
+                </button>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+    </div>
+    <div class="col">
+        <div class="row">
+            <div class="div_table_vlans col-sm">
+                <table class="table table-striped table-hover table-sm">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th class="m-0 p-0"><p class="p_table_head m-0 p-0">Vlan id</p></th>
+                        <th class="m-0 p-0"><p class="p_table_head m-0 p-0">Description</p></th>
+                        <th class="m-0 p-0"><p class="p_table_head m-0 p-0">ip address</p></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for vlan in vlan_table %}
+                    <tr>
+                        <td class="m-0 p-0"><p class="m-0 p-0">{{ vlan }}</p></td>
+                        <td class="m-0 p-0"><p class="m-0 p-0">{{ vlan_table[vlan]['description'] }}</p></td>
+                        <td class="m-0 p-0"><p class="m-0 p-0">{{ vlan_table[vlan]['ip'] }}</p></td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="div_table_mac col">
+                <table class="table table-striped table-bordered table-hover table-sm">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th class="m-0 p-0"><p class="p_table_head m-0 p-0">Interface</p></th>
+                        <th class="m-0 p-0"><p class="p_table_head m-0 p-0">VLAN</p></th>
+                        <th class="m-0 p-0"><p class="p_table_head m-0 p-0">MAC</p></th>
+                        <th class="m-0 p-0"><p class="p_table_head m-0 p-0">IP address</p></th>
+                    </tr>
+                    </thead>
+                {% for interfaces in mac_table %}
+                    {% for interface in interfaces %}
+                        <tr>
+                        <td rowspan="{{ interfaces[interface]['interface_count'] }}" class="m-0 p-0"><p class="m-0 p-0">{{ interface }}</p></td>
+                        {% for vlan in interfaces[interface] %}
+                            {% if 'interface_count' != vlan %}
+                                <td rowspan="{{ interfaces[interface][vlan]['count_mac'] }}" class="m-0 p-0"><p class="m-0 p-0">{{ vlan }}</p></td>
+                                {% for mac in interfaces[interface][vlan]['mac_address'] %}
+                                    {% if loop.first %}
+                                        <td class="m-0 p-0"><p class="m-0 p-0">{{ mac }}</p></td>
+                                        <td class="m-0 p-0"><p class="m-0 p-0">{{ interfaces[interface][vlan]['mac_address'][mac] }}</p></td></tr>
+                                    {% else %}
+                                        <tr>
+                                            <td class="m-0 p-0"><p class="m-0 p-0">{{ mac }}</p></td>
+                                            <td class="m-0 p-0"><p class="m-0 p-0">{{ interfaces[interface][vlan]['mac_address'][mac] }}</p></td>
+                                        </tr>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+{% endblock %}

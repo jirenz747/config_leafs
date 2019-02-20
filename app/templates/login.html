@@ -1,0 +1,33 @@
+{% block body %}
+
+
+
+
+{% if session['logged_in'] %}
+ 
+You're logged in already!
+
+
+{% else %}
+<form action="/login" method="POST">
+  <input type="username" name="username" placeholder="Username">
+<input type="password" name="password" placeholder="Password">
+<input type="submit" value="Log in">
+</form>
+{% endif %}
+
+	<div class="container_error" style="min-height:100% width:80%">
+	{% with messages = get_flashed_messages() %}
+	  {% if messages %}
+	    {% for message in messages %}
+		  <div class="alert alert-warning alert-dismissible" role="alert">
+			{{message}}
+		  </div>
+		{% endfor %}
+	  {% endif %}
+	{% endwith %}
+
+
+	</div>
+
+{% endblock %}

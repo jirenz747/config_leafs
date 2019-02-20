@@ -1,0 +1,29 @@
+{% extends "index.html" %}
+
+{% block menu %}
+
+
+
+<form action="">
+
+    <div class='row form_location'>
+        <div class="col">
+    <select class="form-control form-control-sm" name="object" id="object" onchange="change_object()">
+        <option value="None">Choose location</option>
+        {% for location in locations %}
+        <option value="{{ location }}">{{ location }}</option>
+        {% endfor %}
+    </select>
+        </div>
+        <div class='col'>
+    <select class="form-control form-control-sm" name="rack" id="rack" onchange="change_rack()">
+        <option value="None">Choose Rack</option>
+    </select>
+        </div>
+    </div>
+
+
+</form>
+
+
+{% endblock %}

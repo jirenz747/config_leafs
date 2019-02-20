@@ -1,0 +1,57 @@
+Global_parametrs:
+
+  authentication_network_device:
+    username: 'admin'
+    password: 'admin'
+
+  authentication_web:
+    plain_text_password:
+      username: 'admin'
+      password: 'admin'
+
+    ldap:
+      use: 'no'
+      domain_groups:
+        - 'NetworksAdmins'
+        - 'ServersAdmins'
+      ldap_server: 'ldap://yourdomain.com'
+      ldap_domain: 'yourdomain.com'
+      base_dn: 'DC=yourdomain,DC=com'
+
+
+M1:
+  Rack_1:
+    device_ip: '192.168.1.1'
+    device_name: 'm1_l1'
+    device_count: '1'
+    port_count: '48'
+    exclude_ports:
+      - 'xe-0/0/21'
+      - 'ge-0/0/45'
+
+  Rack_2:
+    device_ip: '192.168.1.2'
+    device_name: 'm1_l2'
+    device_count: '1'
+    port_count: '48'
+    exclude_ports:
+      - 'none'
+
+M8:
+  Rack_5:
+    device_ip: '192.168.2.1'
+    device_name: 'm8_l5'
+    device_count: '1'
+    port_count: '48'
+    exclude_ports:
+      - 'none'
+
+  Rack_6:
+    device_ip: '192.168.2.2'
+    device_name: 'm8_l6'
+    device_count: '1'
+    port_count: '48'
+    exclude_ports:
+      - 'none'
+
+

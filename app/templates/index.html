@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+
+<link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+      <link rel="stylesheet" href="{{url_for('static', filename='css/lib/bootstrap.min.css')}}">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+  </head>
+  <body>
+<script src="{{url_for('static', filename='js/lib/jquery-3.3.1.min.js')}}"></script>
+<script src="{{url_for('static', filename='js/lib/popper.min.js')}}"></script>
+<script src="{{url_for('static', filename='js/lib/bootstrap.min.js')}}"></script>
+<script src="{{url_for('static', filename='js/menu.js')}}"></script>
+<script src="{{url_for('static', filename='js/edit_port.js')}}"></script>
+{% block menu %} {% endblock %}
+
+
+<div class="b-popup invisible" id="loading_data">
+    <div class="b-popup-content">
+        Loading data from QFX...
+    </div>
+</div>
+<div class="b-popup invisible" id="commit">
+  <div class="b-popup-content">
+    Commit changes to network device...
+  </div>
+</div>
+
+<div class="test"></div>
+<br>
+<div class="container-fluid" id="container"></div>
+  </body>
+</html>
+

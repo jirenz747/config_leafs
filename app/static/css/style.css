@@ -1,0 +1,42 @@
+
+.myform {
+    width: 500px;
+    background: #f8f9fa;
+}
+.form_location{
+    width: 500px;
+    background: #f8f9fa;
+}
+
+.change { display: none; }
+
+.port { display: none; }
+
+.b-popup {
+    width: 100%;
+    min-height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    overflow: hidden;
+    position: fixed;
+    top: 0px;
+    z-index: 100;
+}
+
+.b-popup .b-popup-content {
+    margin: 40px auto 0px auto;
+    width: 200px;
+    height: 60px;
+    padding: 10px;
+    background-color: #c5c5c5;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px #000;
+}
+
+table { text-align: center; }
+
+.p_table_head { font-size: 15px; }
+p { font-size: 13px; }
+
+.btn-xs { padding: .10rem .75rem; }
+.mycontainer { width: 1500px; }
+

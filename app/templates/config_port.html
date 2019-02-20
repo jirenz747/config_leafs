@@ -1,0 +1,78 @@
+{% block config_port %}
+<a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" id="port_configuration">
+  Configuration Port
+</a>
+
+
+<div class="collapse" id="collapseExample">
+  <div class="card card-body">
+
+  <div class="myform form-group">
+    <div class='row'>
+      <div class='col'>
+        <label for="port">Port</label>
+        <select class="form-control form-control-sm" id="port" name="port">
+          <option value="None">Choose port</option>
+          {% for port in ports %}
+          <option value="{{ port }}" name="{{ port }}">{{ port }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class='col-8'>
+        <label for="description">Description</label>
+        <input id="description" type="text" placeholder="Enter description" name="description" class="form-control form-control-sm">
+      </div>
+   </div>
+   <div class='row'>
+     <div class='col'>
+        <label for="mtu">MTU</label>
+        <select class="form-control form-control-sm" id="mtu" name="mtu">
+          <option value="None">Choose mtu</option>
+          <option value="1514" name="mtu_1514">1514</option>
+          <option value="9216" name="mtu_9216">9216</option>
+       </select>
+     </div>
+    <div class='col'>
+      <label for="speed">Speed</label>
+      <select class="form-control form-control-sm" id="speed" name="speed">
+        <option value="None">Choose speed port</option>
+        <option value="1Gbit" name="1Gbit">1Gbit</option>
+        <option value="10Gbit" name="10Gbit">10Gbit</option>
+      </select>
+    </div>
+  </div>
+    <div class="row">
+     <div class="col">
+      <label for="type_port">Type port</label>
+    <select class="form-control form-control-sm" id="type_port" onchange="type_port_change()" name="type_port">
+      <option value="None">Choose type port  </option>
+      <option value="access" name="access">access</option>
+      <option value="trunk" name="trunk">trunk</option>
+    </select>
+       </div>
+    </div>
+    <div class="row">
+      <div class="col">
+      <label for="access_vlan" id="label_access_vlan">Vlan</label>
+      <select class="form-control form-control-sm" id="access_vlan" name="access_vlan" >
+        <option value="None">Choose vlans </option>
+        {% for vlan in vlan_table %}
+        <option value="{{ vlan }}" name="{{ vlan }}">{{ vlan }}</option>
+        {% endfor %}
+      </select>
+      <label for="trunk_vlans" id="label_trunk_vlans">Vlan</label>
+      <select class="form-control form-control-sm" id="trunk_vlans" name="trunk_vlans"  multiple size="3">
+        {% for vlan in vlan_table %}
+        <option value="{{ vlan }}" name="{{ vlan }}">{{ vlan }}</option>
+        {% endfor %}
+      </select>
+      </div>
+    </div>
+    <button type="button" class="btn btn-primary" onclick="submit_new_data()">Run</button>
+  </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block show_tables %} {% endblock %}
