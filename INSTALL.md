@@ -31,7 +31,7 @@ pip install -r requirements.txt
 ```
 Указываем flask откуда начинается наше приложение:
 ```
-echo "export FLASK_APP=microblog.py" >> ~/.profile
+echo "export FLASK_APP=config_leafs.py" >> ~/.profile
 ```
 
 Перезапускаем вируальное окружение:
